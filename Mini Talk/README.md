@@ -1,4 +1,4 @@
-# minitalk
+# Mini Talk
 
 #### The goal of this project is to create two executables: a server and a client.
 
