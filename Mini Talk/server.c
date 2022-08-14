@@ -2,19 +2,19 @@
 #include <signal.h>
 #include <unistd.h>
 
+int size = 128;
+
 void	print_message(int s)
 {
-	static int	size;
 	static char c;
 
 	if(s == SIGUSR1)
-		c += (1 << (7 - size++));
-	else
-		c += (0 << (7 - size++));
-	if(size == 8)
+		c += size;
+	size /= 2;
+	if(size == 0)
 	{
 		write(1, &c, 1);
-		size = 0;
+		size = 128;
 		c = 0;
 	}
 }
