@@ -3,37 +3,25 @@
 #include <signal.h>
 #include <unistd.h>
 
-void	push_server(int	pid, char *str)
+int	main(int ac, char **av)
 {
-	int	size = 8;
-	int	i = 0;
-	int	dongu = strlen(str);
-
-	while(dongu--)
+        int	mask;
+	int	i = -1;
+        
+        if(ac != 3)
+		write(1, "Arguments numbers error!\n", 25);  
+	while(++i < strlen(av[2]))
 	{
-		while(size--)
+                mask = 128;
+		while(mask > 0)
 		{
-			if(((str[i] >> size) & 1) == 0)
+			if((av[2][i] & mask) == 0)
 				kill(pid, SIGUSR2);
 			else
 				kill(pid, SIGUSR1);
 			usleep(70);
+                        mask /= 2;
 		}
-		size = 8;
-		i++;
-	}
-}
-
-int	main(int ac, char **av)
-{
-	if(ac != 3)
-		write(1, "Arguments numbers error!\n", 25);
-	else
-	{
-		if(atoi(av[1]))
-			push_server(atoi(av[1]), av[2]);
-		else
-			write(1, "Pid Number Error!\n", 18);
 	}
 	return (0);
 }
