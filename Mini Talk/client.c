@@ -9,17 +9,13 @@ int	main(int ac, char **av)
 	int	i = -1;
         
         if(ac != 3)
-		write(1, "Arguments numbers error!\n", 25);  
+		return (write(1, "Arguments numbers error!\n", 25));  
 	while(++i < strlen(av[2]))
 	{
                 mask = 128;
-		while(mask > 0)
+		while(mask > 0 && usleep(70))
 		{
-			if((av[2][i] & mask) == 0)
-				kill(pid, SIGUSR2);
-			else
-				kill(pid, SIGUSR1);
-			usleep(70);
+			!(av[2][i] & mask) ? kill(pid, SIGUSR2) : kill(pid, SIGUSR1);
                         mask /= 2;
 		}
 	}
